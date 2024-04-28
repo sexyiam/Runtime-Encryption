@@ -2,7 +2,7 @@
 The basic idea of this trick is to create an encrypted function, where only the current function being executed can be decrypted. This is done by modifying the .text section of the executable to contain the encrypted code. Then, before executing each function, we decrypt it. After executing the function, we re-encrypt it to keep the rest of the program encrypted.
 
 # Specific Implementation
-To implement this trick, we can use the gcc -finstrument-functions option. This option causes a special function ([b]__cyg_profile_func_enter[/b] and [b]__cyg_profile_func_exit[/b]) to be called before and after each function call, respectively. By using these functions, we can modify the code to perform the encryption and decryption tasks.
+To implement this trick, we can use the gcc **-finstrument-functions** option. This option causes a special function (**__cyg_profile_func_enter** and **__cyg_profile_func_exit**) to be called before and after each function call, respectively. By using these functions, we can modify the code to perform the encryption and decryption tasks.
 
 
 Basically something like this,
