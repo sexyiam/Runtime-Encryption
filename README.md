@@ -1,7 +1,7 @@
-[b]Basic Idea[/b]
+# Basic Idea
 The basic idea of this trick is to create an encrypted function, where only the current function being executed can be decrypted. This is done by modifying the .text section of the executable to contain the encrypted code. Then, before executing each function, we decrypt it. After executing the function, we re-encrypt it to keep the rest of the program encrypted.
 
-[b]Specific Implementation[/b]
+# Specific Implementation
 To implement this trick, we can use the gcc -finstrument-functions option. This option causes a special function ([b]__cyg_profile_func_enter[/b] and [b]__cyg_profile_func_exit[/b]) to be called before and after each function call, respectively. By using these functions, we can modify the code to perform the encryption and decryption tasks.
 
 
@@ -75,9 +75,9 @@ encfn is a function that performs XOR encryption and decryption on the function 
 
 So, the basic idea is -
 
-The function __cyg_profile_func_enter is called before each function call. In this function, we first decrypt the current function (__cyg_profile_func_enter is actually a pointer to the address of the decrypted function). Then, we add the current function to the callstack and call the function using the __cyg_profile_func_exit function pointer.
+The function __cyg_profile_func_enter is called before each function call. In this function, we first decrypt the current function (__cyg_profile_func_enter is actually a pointer to the address of the decrypted function). Then, we add the current function to the callstack and call the function using the **__cyg_profile_func_exit** function pointer.
 
-The function __cyg_profile_func_exit is called after each function call. In this function, we first call the function using the __cyg_profile_func_enter function pointer. Then, we remove the current function from the callstack and re-encrypt the current function.
+The function **__cyg_profile_func_exit** is called after each function call. In this function, we first call the function using the __cyg_profile_func_enter function pointer. Then, we remove the current function from the callstack and re-encrypt the current function.
 
 ```c++
 int exitMark, enterMark;
